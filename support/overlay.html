@@ -1,29 +1,387 @@
 <style>
-@media(pointer:coarse){#canvas{height:100dvh!important;touch-action:none}#modes{position:fixed!important;bottom:70px!important;left:0!important;right:0!important;height:auto!important;display:flex!important;flex-wrap:wrap;justify-content:center;gap:8px;padding:12px;background:#102b27}#modes button{min-height:48px!important;padding:8px 16px!important;font:16px system-ui!important}#ls-stage{transform:none!important;width:100%!important;height:100%!important}#ls-bars{top:auto!important;bottom:170px!important;left:12px!important;right:12px!important;max-width:100%!important}#ls-logo{top:24px!important;left:24px!important;width:100px!important;height:100px!important}#game-tools{bottom:max(8px,env(safe-area-inset-bottom))!important}}
-#game-tools{position:fixed;left:12px;bottom:12px;z-index:10005;display:flex;gap:6px;font:14px system-ui}
-#game-tools a,#game-tools button{box-sizing:border-box;background:#182621e8;color:#fff;padding:10px 14px;border:1px solid #789184;border-radius:24px;min-height:44px;font:inherit;text-decoration:none;cursor:pointer}
-html.game-tools-hidden [data-game-overlay],html.game-tools-hidden #game-help{display:none!important}
-html.game-tools-hidden #game-tools button{opacity:.5}
+  #xbox-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 10008;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 8, 10, 0.8);
+    backdrop-filter: blur(9px);
+    padding: 20px;
+  }
+  #xbox-menu.visible {
+    display: flex;
+  }
+  #xbox-menu .panel {
+    position: relative;
+    width: min(760px, 94vw);
+    border-radius: 24px;
+    border: 1px solid rgba(212, 220, 225, 0.35);
+    background: linear-gradient(180deg, rgba(18, 24, 27, 0.98), rgba(7, 10, 12, 0.98));
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+  }
+  #xbox-menu .panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(91, 136, 211, 0.12) 35%, transparent 60%, rgba(91, 136, 211, 0.1) 100%);
+    pointer-events: none;
+  }
+  #xbox-menu .panel-inner {
+    position: relative;
+    z-index: 1;
+    padding: 20px 20px 18px;
+  }
+  #xbox-menu .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(218, 224, 230, 0.2);
+  }
+  #xbox-menu .title {
+    font-size: 1.1rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #d8e3ef;
+  }
+  #xbox-menu .subtitle {
+    color: #a7b7c2;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  #xbox-menu .menu-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 18px;
+  }
+  #xbox-menu .menu-list,
+  #xbox-menu .setting-panel {
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(218, 224, 230, 0.12);
+    padding: 16px;
+  }
+  #xbox-menu .menu-list {
+    display: grid;
+    gap: 12px;
+  }
+  #xbox-menu .menu-item {
+    width: 100%;
+    text-align: left;
+    border: 1px solid rgba(218, 224, 230, 0.18);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    color: #edf5ff;
+    padding: 14px 16px;
+    font: 700 1rem/1.2 system-ui,sans-serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  #xbox-menu .menu-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+  }
+  #xbox-menu .menu-item .icon {
+    font-size: 1.4rem;
+    opacity: 0.9;
+  }
+  #xbox-menu .setting-panel h3 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #dce9f6;
+  }
+  #xbox-menu .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid rgba(218,224,230,0.1);
+    color: #dfeaf5;
+  }
+  #xbox-menu .toggle-row:first-of-type {
+    border-top: 0;
+  }
+  #xbox-menu .toggle-button {
+    border-radius: 999px;
+    border: 1px solid rgba(132, 175, 231, 0.5);
+    background: rgba(100, 129, 172, 0.18);
+    color: #edf5ff;
+    min-width: 120px;
+    min-height: 36px;
+    padding: 0 14px;
+    font: 700 .82rem/1 system-ui,sans-serif;
+    cursor: pointer;
+  }
+  #xbox-menu .toggle-button.on {
+    background: rgba(82, 164, 110, 0.2);
+    border-color: rgba(82, 164, 110, 0.7);
+  }
+  #xbox-menu .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #d6e7f5;
+    opacity: 0.8;
+  }
+  #split-screen-demo {
+    position: fixed;
+    inset: 0;
+    z-index: 10007;
+    display: none;
+    pointer-events: none;
+    background: rgba(3, 5, 7, 0.38);
+  }
+  #split-screen-demo.visible {
+    display: block;
+  }
+  #split-screen-demo .session {
+    position: absolute;
+    left: 3vw;
+    right: 3vw;
+    height: calc(50% - 16px);
+    border: 2px solid rgba(135, 164, 203, 0.8);
+    border-radius: 18px;
+    background: rgba(15, 18, 23, 0.68);
+    box-shadow: inset 0 0 20px rgba(110, 140, 200, 0.14);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 12px 16px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(225, 235, 242, 0.95);
+  }
+  #split-screen-demo .session.top {
+    top: 2vh;
+  }
+  #split-screen-demo .session.bottom {
+    bottom: 2vh;
+  }
+  #split-screen-demo .session .tag {
+    font-size: .72rem;
+    opacity: .8;
+  }
+  #split-screen-demo .session .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .72rem;
+    opacity: .9;
+  }
+  #split-screen-demo .session .label::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(103, 173, 255, 0.95);
+    box-shadow: 0 0 14px rgba(103, 173, 255, 0.8);
+  }
+  #split-screen-demo .session.bottom .label::before {
+    background: rgba(255, 198, 75, 0.95);
+    box-shadow: 0 0 14px rgba(255, 198, 75, 0.8);
+  }
+  @media (max-width: 700px) {
+    #xbox-menu .menu-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
-<div id="game-tools"><a id="game-help" href="/__support/" target="_blank" rel="noopener">Help / browser checks</a><button id="game-tools-toggle" type="button" aria-label="Hide extra controls (F8)" aria-pressed="false">Hide · F8</button></div>
+<div id="split-screen-demo" aria-hidden="true">
+  <div class="session top">
+    <div class="tag">Session</div>
+    <div class="label">Controller</div>
+  </div>
+  <div class="session bottom">
+    <div class="tag">Session</div>
+    <div class="label">Keyboard</div>
+  </div>
+</div>
+<div id="xbox-menu" role="dialog" aria-modal="true" aria-labelledby="xbox-menu-title">
+  <div class="panel">
+    <div class="panel-inner">
+      <div class="topbar">
+        <div>
+          <div class="title" id="xbox-menu-title">Xbox Menu</div>
+          <div class="subtitle">Session Controls</div>
+        </div>
+        <div class="badge">Esc x 3</div>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-list">
+          <button type="button" class="menu-item" id="rate-game-btn"><span>Rate Game</span><span class="icon">★</span></button>
+          <button type="button" class="menu-item" id="leave-game-btn"><span>Leave Game</span><span class="icon">⏻</span></button>
+          <button type="button" class="menu-item" id="settings-btn"><span>Settings</span><span class="icon">⚙</span></button>
+        </div>
+        <div class="setting-panel">
+          <h3>Settings</h3>
+          <div class="toggle-row">
+            <span>Graphics</span>
+            <button type="button" class="toggle-button" id="graphics-toggle">Standard</button>
+          </div>
+          <div class="toggle-row">
+            <span>Controls order</span>
+            <button type="button" class="toggle-button" id="controls-toggle">Controller / Keyboard</button>
+          </div>
+          <div class="toggle-row">
+            <span>Split screen</span>
+            <button type="button" class="toggle-button" id="split-toggle">Off</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 (() => {
-  const button = document.getElementById('game-tools-toggle');
-  function setHidden(hidden) {
-    document.documentElement.classList.toggle('game-tools-hidden', hidden);
-    button.textContent = hidden ? 'Tools · F8' : 'Hide · F8';
-    button.setAttribute('aria-pressed', String(hidden));
-    button.setAttribute('aria-label', (hidden ? 'Show' : 'Hide') + ' extra controls (F8)');
-    dispatchEvent(new CustomEvent('game-tools-visibility', {detail:{hidden}}));
-    try { sessionStorage.setItem('playgta5.toolsHidden', String(hidden)); } catch {}
+  const menu = document.getElementById('xbox-menu');
+  const splitDemo = document.getElementById('split-screen-demo');
+  const graphicsToggle = document.getElementById('graphics-toggle');
+  const controlsToggle = document.getElementById('controls-toggle');
+  const splitToggle = document.getElementById('split-toggle');
+  const settingsBtn = document.getElementById('settings-btn');
+  const rateGameBtn = document.getElementById('rate-game-btn');
+  const leaveGameBtn = document.getElementById('leave-game-btn');
+
+  let escHits = 0;
+  let escTimer = null;
+  let splitMode = new URLSearchParams(window.location.search).get('split') === '1' || localStorage.getItem('playgta5.splitMode') === 'true';
+  let controlsOrder = localStorage.getItem('playgta5.controlsOrder') === 'keyboard-first' ? 'Keyboard / Controller' : 'Controller / Keyboard';
+  let graphicsLow = localStorage.getItem('playgta5.graphicsLow') === 'true';
+
+  function setMenuVisible(visible) {
+    if (!menu) return;
+    menu.classList.toggle('visible', visible);
+    menu.setAttribute('aria-hidden', String(!visible));
   }
-  const toggle = () => setHidden(!document.documentElement.classList.contains('game-tools-hidden'));
-  button.onclick = toggle;
-  for (const type of ['keydown', 'keyup']) addEventListener(type, e => {
-    if (e.code !== 'F8') return;
-    e.preventDefault(); e.stopImmediatePropagation();
-    if (type === 'keydown' && !e.repeat) toggle();
-  }, true);
-  try { setHidden(sessionStorage.getItem('playgta5.toolsHidden') === 'true'); } catch {}
+
+  function syncSplitDemo() {
+    if (!splitDemo) return;
+    splitDemo.classList.toggle('visible', splitMode);
+    splitDemo.setAttribute('aria-hidden', String(!splitMode));
+    document.documentElement.classList.toggle('split-screen-mode', splitMode);
+  }
+
+  function syncSplitToggle() {
+    if (!splitToggle) return;
+    splitToggle.textContent = splitMode ? 'On' : 'Off';
+    splitToggle.classList.toggle('on', splitMode);
+  }
+
+  function syncGraphicsToggle() {
+    if (!graphicsToggle) return;
+    graphicsToggle.textContent = graphicsLow ? 'Low' : 'Standard';
+    graphicsToggle.classList.toggle('on', graphicsLow);
+    localStorage.setItem('playgta5.graphicsLow', String(graphicsLow));
+  }
+
+  function syncControlsToggle() {
+    if (!controlsToggle) return;
+    controlsOrder = controlsOrder === 'Controller / Keyboard' ? 'Keyboard / Controller' : 'Controller / Keyboard';
+    controlsToggle.textContent = controlsOrder;
+    controlsToggle.classList.toggle('on', controlsOrder === 'Keyboard / Controller');
+    localStorage.setItem('playgta5.controlsOrder', controlsOrder === 'Keyboard / Controller' ? 'keyboard-first' : 'controller-first');
+  }
+
+  function openMenu() {
+    setMenuVisible(true);
+    escHits = 0;
+    clearTimeout(escTimer);
+  }
+
+  function closeMenu() {
+    setMenuVisible(false);
+    escHits = 0;
+    clearTimeout(escTimer);
+  }
+
+  function detectEscape() {
+    escHits += 1;
+    clearTimeout(escTimer);
+    escTimer = setTimeout(() => { escHits = 0; }, 800);
+
+    if (escHits >= 3) {
+      openMenu();
+      escHits = 0;
+    }
+  }
+
+  if (graphicsToggle) {
+    graphicsToggle.addEventListener('click', () => {
+      graphicsLow = !graphicsLow;
+      syncGraphicsToggle();
+    });
+  }
+
+  if (controlsToggle) {
+    controlsToggle.addEventListener('click', () => {
+      syncControlsToggle();
+    });
+  }
+
+  if (splitToggle) {
+    splitToggle.addEventListener('click', () => {
+      splitMode = !splitMode;
+      localStorage.setItem('playgta5.splitMode', String(splitMode));
+      syncSplitDemo();
+      syncSplitToggle();
+    });
+  }
+
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', () => {
+      settingsBtn.textContent = 'Settings';
+      openMenu();
+    });
+  }
+
+  if (rateGameBtn) {
+    rateGameBtn.addEventListener('click', () => {
+      alert('Game rating saved. Thanks for playing!');
+      closeMenu();
+    });
+  }
+
+  if (leaveGameBtn) {
+    leaveGameBtn.addEventListener('click', () => {
+      window.location.href = '/';
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.code === 'Escape') {
+      event.preventDefault();
+      if (menu && menu.classList.contains('visible')) {
+        closeMenu();
+      } else {
+        detectEscape();
+      }
+    }
+  });
+
+  if (controlsToggle) {
+    controlsToggle.textContent = controlsOrder;
+  }
+
+  syncGraphicsToggle();
+  syncControlsToggle();
+  syncSplitDemo();
+  syncSplitToggle();
 })();
 </script>
