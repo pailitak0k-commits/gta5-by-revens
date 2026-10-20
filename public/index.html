@@ -57,6 +57,7 @@ h2{margin:0 0 12px;font-size:1.6rem;color:#f4e8c4}p{margin:0 0 16px;color:var(--
       <p>Prepare your browser, confirm your settings, and start the game when you're ready. This launcher is tuned for a clean GTA-style launch experience.</p>
       <div class="launch-actions">
         <button id="launch-game-btn" class="button" type="button">Start Game</button>
+        <button id="launch-split-btn" class="button secondary" type="button">Play Split Screen</button>
         <button id="cancel-launch-btn" class="button secondary" type="button">Cancel</button>
       </div>
       <div class="launch-meta">
@@ -91,8 +92,25 @@ h2{margin:0 0 12px;font-size:1.6rem;color:#f4e8c4}p{margin:0 0 16px;color:var(--
   const launcher = document.getElementById('launcher-screen');
   const trigger = document.getElementById('play-online-btn');
   const launchBtn = document.getElementById('launch-game-btn');
+  const splitBtn = document.getElementById('launch-split-btn');
   const cancelBtn = document.getElementById('cancel-launch-btn');
   const launchUrl = trigger && trigger.dataset.launchUrl ? trigger.dataset.launchUrl : 'https://gta5-87g.pages.dev/';
+
+  function setMode(mode) {
+    try {
+      if (mode === 'split') {
+        localStorage.setItem('playgta5.splitMode', 'true');
+      } else {
+        localStorage.setItem('playgta5.splitMode', 'false');
+      }
+    } catch (err) {}
+    return mode;
+  }
+
+  function buildLaunchUrl(mode) {
+    const sep = launchUrl.includes('?') ? '&' : '?';
+    return mode === 'split' ? launchUrl + sep + 'split=1' : launchUrl;
+  }
 
   function hideLauncher() {
     if (launcher) launcher.classList.add('hidden');
@@ -102,9 +120,10 @@ h2{margin:0 0 12px;font-size:1.6rem;color:#f4e8c4}p{margin:0 0 16px;color:var(--
     if (launcher) launcher.classList.remove('hidden');
   }
 
-  function startGame() {
+  function startGame(mode) {
+    setMode(mode);
     hideLauncher();
-    window.location.href = launchUrl;
+    window.location.href = buildLaunchUrl(mode);
   }
 
   if (trigger) {
@@ -115,7 +134,11 @@ h2{margin:0 0 12px;font-size:1.6rem;color:#f4e8c4}p{margin:0 0 16px;color:var(--
   }
 
   if (launchBtn) {
-    launchBtn.addEventListener('click', startGame);
+    launchBtn.addEventListener('click', function () { startGame('single'); });
+  }
+
+  if (splitBtn) {
+    splitBtn.addEventListener('click', function () { startGame('split'); });
   }
 
   if (cancelBtn) {
