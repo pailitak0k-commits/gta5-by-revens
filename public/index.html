@@ -14,6 +14,7 @@
     --gold: #f2c768;
     --text: #edf5fb;
     --muted: #a8b8c2;
+    --shadow: rgba(0,0,0,.52);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; }
@@ -187,7 +188,7 @@
     gap: 12px;
     flex-wrap: wrap;
   }
-  .primary-btn, .secondary-btn {
+  .primary-btn, .secondary-btn, .menu-btn {
     appearance: none;
     border: 0;
     border-radius: 12px;
@@ -195,9 +196,9 @@
     padding: 0 18px;
     font: 800 0.95rem/1.1 system-ui, sans-serif;
     cursor: pointer;
-    transition: transform .12s ease;
+    transition: transform .12s ease, opacity .12s ease;
   }
-  .primary-btn:hover, .secondary-btn:hover { transform: translateY(-1px); }
+  .primary-btn:hover, .secondary-btn:hover, .menu-btn:hover { transform: translateY(-1px); }
   .primary-btn {
     background: linear-gradient(180deg, #8fe078, #5fbe5e);
     color: #0a140d;
@@ -206,6 +207,12 @@
     background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.1);
     color: var(--text);
+  }
+  .menu-btn {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    color: var(--text);
+    min-width: 120px;
   }
   .side-panel {
     display: grid;
@@ -241,8 +248,137 @@
     font-size: 0.95rem;
   }
   .mini-item strong { color: var(--text); }
+
+  .settings-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(4,6,8,.58);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+    padding: 20px;
+  }
+  .settings-overlay.visible { display: flex; }
+  .settings-panel {
+    width: min(760px, 100%);
+    background: linear-gradient(180deg, rgba(15,21,25,.98), rgba(10,14,16,.99));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 24px;
+    box-shadow: 0 26px 80px var(--shadow);
+    overflow: hidden;
+  }
+  .settings-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .settings-title {
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 800;
+  }
+  .settings-body {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 420px;
+  }
+  .settings-nav {
+    padding: 16px;
+    background: rgba(255,255,255,.02);
+    border-right: 1px solid rgba(255,255,255,.08);
+  }
+  .settings-nav button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    padding: 12px 14px;
+    font: 700 0.9rem/1 system-ui, sans-serif;
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .settings-nav button.active {
+    background: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.08);
+  }
+  .settings-content {
+    padding: 22px 20px 18px;
+  }
+  .settings-section {
+    display: none;
+  }
+  .settings-section.active { display: block; }
+  .panel-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .panel-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .panel-item small {
+    display: block;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .toggle {
+    width: 54px;
+    height: 30px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.12);
+    position: relative;
+  }
+  .toggle::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--text);
+    transition: transform .15s ease;
+  }
+  .toggle.on {
+    background: linear-gradient(180deg, rgba(125,225,104,.35), rgba(87,169,255,.3));
+    border-color: rgba(125,225,104,.6);
+  }
+  .toggle.on::after { transform: translateX(23px); }
+  .settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .menu-btn.primary { background: linear-gradient(180deg, #8fe078, #5fbe5e); color: #0a140d; }
+
   @media (max-width: 900px) {
     .home-grid { grid-template-columns: 1fr; }
+    .settings-body { grid-template-columns: 1fr; }
+    .settings-nav {
+      border-right: 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
   }
 </style>
 <div class="xbox-shell">
@@ -260,6 +396,8 @@
           <p>Jump into the GTA-style launcher experience and choose how you want to start your session.</p>
           <div class="game-actions">
             <button class="primary-btn" id="open-launcher-btn" type="button">Open Game</button>
+            <button class="secondary-btn" id="split-launch-btn" type="button">Play Split Screen</button>
+            <button class="secondary-btn" id="open-settings-btn" type="button">Settings</button>
             <button class="secondary-btn" id="open-support-btn" type="button">Support</button>
           </div>
         </div>
@@ -275,7 +413,7 @@
             <div class="game-banner"></div>
             <div class="game-actions">
               <button class="primary-btn" id="launch-gta-btn" type="button">Launch</button>
-              <button class="secondary-btn" id="details-btn" type="button">Details</button>
+              <button class="secondary-btn" id="split-screen-btn" type="button">Split Screen</button>
             </div>
           </div>
         </div>
@@ -293,24 +431,202 @@
   </div>
 </div>
 
+<div id="settings-overlay" class="settings-overlay" aria-hidden="true">
+  <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="settings-top">
+      <div class="settings-title" id="settings-title">Game Settings</div>
+      <button class="menu-btn" id="close-settings-btn" type="button">Close</button>
+    </div>
+    <div class="settings-body">
+      <div class="settings-nav">
+        <button class="active" data-tab="general" type="button">General <span>›</span></button>
+        <button data-tab="display" type="button">Display <span>›</span></button>
+        <button data-tab="audio" type="button">Audio <span>›</span></button>
+        <button data-tab="network" type="button">Network <span>›</span></button>
+      </div>
+      <div class="settings-content">
+        <div class="settings-section active" data-section="general">
+          <div class="panel-grid">
+            <div class="panel-item">
+              <div>
+                <strong>Controller vibration</strong>
+                <small>Feedback during gameplay</small>
+              </div>
+              <span class="toggle on" aria-label="Controller vibration on"></span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Auto-save</strong>
+                <small>Save progress automatically</small>
+              </div>
+              <span class="toggle on" aria-label="Auto-save on"></span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Quick Resume</strong>
+                <small>Return to the last session</small>
+              </div>
+              <span class="toggle on" aria-label="Quick Resume on"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" data-section="display">
+          <div class="panel-grid">
+            <div class="panel-item">
+              <div>
+                <strong>Resolution</strong>
+                <small>Match your browser window</small>
+              </div>
+              <span>1920×1080</span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Window mode</strong>
+                <small>Fullscreen / borderless</small>
+              </div>
+              <span>Fullscreen</span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Brightness</strong>
+                <small>Adjust for comfort</small>
+              </div>
+              <span>75%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" data-section="audio">
+          <div class="panel-grid">
+            <div class="panel-item">
+              <div>
+                <strong>Master volume</strong>
+                <small>Overall system sound</small>
+              </div>
+              <span>80%</span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Music</strong>
+                <small>Background score mix</small>
+              </div>
+              <span>65%</span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Voice chat</strong>
+                <small>Enabled for multiplayer</small>
+              </div>
+              <span class="toggle on" aria-label="Voice chat on"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" data-section="network">
+          <div class="panel-grid">
+            <div class="panel-item">
+              <div>
+                <strong>Connection status</strong>
+                <small>Stable online sync</small>
+              </div>
+              <span>Good</span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Data saver</strong>
+                <small>Reduce extra downloads</small>
+              </div>
+              <span class="toggle" aria-label="Data saver off"></span>
+            </div>
+            <div class="panel-item">
+              <div>
+                <strong>Leave session</strong>
+                <small>Back to the launcher</small>
+              </div>
+              <button class="menu-btn primary" type="button" id="exit-to-home-btn">Exit</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-actions">
+          <button class="menu-btn" id="resume-btn" type="button">Resume</button>
+          <button class="menu-btn primary" id="save-settings-btn" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   const openLauncherBtn = document.getElementById('open-launcher-btn');
+  const splitLaunchBtn = document.getElementById('split-launch-btn');
+  const splitScreenBtn = document.getElementById('split-screen-btn');
   const launchGtaBtn = document.getElementById('launch-gta-btn');
   const openSupportBtn = document.getElementById('open-support-btn');
-  const detailsBtn = document.getElementById('details-btn');
+  const openSettingsBtn = document.getElementById('open-settings-btn');
+  const closeSettingsBtn = document.getElementById('close-settings-btn');
+  const resumeBtn = document.getElementById('resume-btn');
+  const saveSettingsBtn = document.getElementById('save-settings-btn');
+  const settingsOverlay = document.getElementById('settings-overlay');
+  const exitToHomeBtn = document.getElementById('exit-to-home-btn');
 
-  function launchGtaPage() {
-    window.location.href = 'https://gta5-87g.pages.dev/';
+  function launchGtaPage(mode = 'single') {
+    const url = mode === 'split'
+      ? 'https://gta5-87g.pages.dev/?split=1'
+      : 'https://gta5-87g.pages.dev/';
+    window.location.href = url;
   }
 
   function openSupport() {
     window.location.href = '/__support/';
   }
 
-  openLauncherBtn.addEventListener('click', launchGtaPage);
-  launchGtaBtn.addEventListener('click', launchGtaPage);
+  function openSettings() {
+    settingsOverlay.classList.add('visible');
+    settingsOverlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeSettings() {
+    settingsOverlay.classList.remove('visible');
+    settingsOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  function toggleSettings() {
+    const isVisible = settingsOverlay.classList.contains('visible');
+    settingsOverlay.classList.toggle('visible');
+    settingsOverlay.setAttribute('aria-hidden', String(isVisible));
+  }
+
+  openLauncherBtn.addEventListener('click', () => launchGtaPage('single'));
+  launchGtaBtn.addEventListener('click', () => launchGtaPage('single'));
+  splitLaunchBtn.addEventListener('click', () => launchGtaPage('split'));
+  splitScreenBtn.addEventListener('click', () => launchGtaPage('split'));
   openSupportBtn.addEventListener('click', openSupport);
-  detailsBtn.addEventListener('click', () => {
-    window.location.href = 'https://github.com/alihammoud21/playgta5';
+  openSettingsBtn.addEventListener('click', openSettings);
+  closeSettingsBtn.addEventListener('click', closeSettings);
+  resumeBtn.addEventListener('click', closeSettings);
+  saveSettingsBtn.addEventListener('click', closeSettings);
+  exitToHomeBtn.addEventListener('click', () => { window.location.href = '/'; });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      const isOpen = settingsOverlay.classList.contains('visible');
+      if (isOpen) {
+        closeSettings();
+      } else {
+        openSettings();
+      }
+    }
+  });
+
+  document.querySelectorAll('[data-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('[data-tab]').forEach((b) => b.classList.toggle('active', b === button));
+      const tab = button.dataset.tab;
+      document.querySelectorAll('.settings-section').forEach((section) => {
+        section.classList.toggle('active', section.dataset.section === tab);
+      });
+    });
   });
 </script>
