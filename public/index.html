@@ -573,7 +573,7 @@
 
   function launchGtaPage(mode = 'single') {
     const url = mode === 'split'
-      ? 'https://gta5-87g.pages.dev/?split=1'
+      ? 'https://gta5-87g.pages.dev/?split=1&layout=controller-bottom'
       : 'https://gta5-87g.pages.dev/';
     window.location.href = url;
   }
@@ -593,9 +593,11 @@
   }
 
   function toggleSettings() {
-    const isVisible = settingsOverlay.classList.contains('visible');
-    settingsOverlay.classList.toggle('visible');
-    settingsOverlay.setAttribute('aria-hidden', String(isVisible));
+    if (settingsOverlay.classList.contains('visible')) {
+      closeSettings();
+    } else {
+      openSettings();
+    }
   }
 
   openLauncherBtn.addEventListener('click', () => launchGtaPage('single'));
@@ -611,12 +613,7 @@
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      const isOpen = settingsOverlay.classList.contains('visible');
-      if (isOpen) {
-        closeSettings();
-      } else {
-        openSettings();
-      }
+      toggleSettings();
     }
   });
 
