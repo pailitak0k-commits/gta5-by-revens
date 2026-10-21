@@ -1,78 +1,316 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PlayGTA5</title>
-  <style>
-    :root {
-      --bg: #070b0d;
-      --panel: rgba(18, 25, 28, 0.95);
-      --panel-2: rgba(14, 18, 22, 0.96);
-      --line: rgba(255,255,255,0.08);
-      --text: #edf5fb;
-      --muted: #a9bbca;
-      --green: #7de168;
-      --gold: #f2c768;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; }
-    body {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at top, rgba(87,169,255,0.12), transparent 28%), linear-gradient(180deg, #0b0f12 0%, #070b0d 100%);
-      color: var(--text);
-      font: 17px/1.5 system-ui, sans-serif;
-    }
-    .wrap {
-      width: min(560px, calc(100% - 30px));
-      background: linear-gradient(180deg, rgba(18,25,28,0.96), rgba(9,12,15,0.96));
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      box-shadow: 0 26px 80px rgba(0,0,0,0.45);
-      padding: 28px 24px;
-      text-align: center;
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(2.1rem, 5vw, 3.6rem);
-      line-height: 0.96;
-      letter-spacing: -0.06em;
-    }
-    p {
-      margin: 0 0 22px;
-      color: var(--muted);
-    }
-    .button {
-      appearance: none;
-      border: none;
-      border-radius: 12px;
-      min-height: 48px;
-      padding: 0 22px;
-      font: 800 0.98rem/1.1 system-ui, sans-serif;
-      background: linear-gradient(180deg, #8fe078, #5fbe5e);
-      color: #0a140d;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform .12s ease;
-    }
-    .button:hover { transform: translateY(-1px); }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <h1>PLAYGTA5</h1>
-    <p>Opening the game in this tab…</p>
-    <a class="button" href="https://gta5-87g.pages.dev/" target="_self">Open game</a>
-  </div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PlayGTA5 · Xbox Home</title>
+<style>
+  :root {
+    --bg: #070b0d;
+    --panel: rgba(21, 29, 31, 0.9);
+    --panel-2: rgba(19, 22, 25, 0.96);
+    --line: rgba(180, 207, 224, 0.2);
+    --xbox-green: #7de168;
+    --xbox-blue: #57a9ff;
+    --gold: #f2c768;
+    --text: #edf5fb;
+    --muted: #a8b8c2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background:
+      radial-gradient(circle at top, rgba(98, 141, 181, 0.18), transparent 30%),
+      linear-gradient(180deg, #0a0f12 0%, #070b0d 100%);
+    color: var(--text);
+    font: 17px/1.6 system-ui, sans-serif;
+  }
+  .xbox-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+  }
+  .dashboard {
+    width: min(1180px, 100%);
+    background: rgba(12, 15, 18, 0.82);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    overflow: hidden;
+  }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #edf4fb;
+  }
+  .brand-mark {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--xbox-green), var(--xbox-blue));
+    box-shadow: 0 0 18px rgba(87,169,255,.7);
+  }
+  .user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .home-grid {
+    padding: 30px 24px 34px;
+    display: grid;
+    grid-template-columns: 1.4fr .95fr;
+    gap: 24px;
+  }
+  .hero {
+    position: relative;
+    min-height: 420px;
+    background:
+      linear-gradient(180deg, rgba(5,7,9,.15), rgba(5,7,9,.6)),
+      linear-gradient(135deg, rgba(151,156,166,.1), rgba(17,36,52,.75)),
+      url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    border-radius: 26px;
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: inset 0 0 30px rgba(0,0,0,.2);
+    display: flex;
+    align-items: flex-end;
+    padding: 22px;
+  }
+  .hero-card {
+    width: min(420px, 100%);
+    padding: 22px 20px 18px;
+    border-radius: 20px;
+    background: rgba(10,14,18,.62);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(8px);
+  }
+  .eyebrow {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 800;
+  }
+  .hero-card h1 {
+    margin: 8px 0 12px;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 0.96;
+    letter-spacing: -0.06em;
+  }
+  .hero-card p {
+    margin: 0 0 18px;
+    color: #dfeaf5;
+    max-width: 30ch;
+  }
+  .game-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .game-tile {
+    background: linear-gradient(180deg, rgba(22,31,35,.96), rgba(14,19,22,.96));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 22px;
+    padding: 16px;
+    display: grid;
+    gap: 14px;
+  }
+  .tile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .tile-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    border-radius: 999px;
+    padding: 0 12px;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.04);
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .game-banner {
+    position: relative;
+    min-height: 170px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+    background:
+      linear-gradient(180deg, rgba(8,13,18,.12), rgba(8,13,18,.72)),
+      url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+  }
+  .game-banner::after {
+    content: "GTA V";
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: -0.08em;
+    font-weight: 900;
+    color: rgba(255,255,255,.9);
+    text-shadow: 0 8px 24px rgba(0,0,0,.45);
+  }
+  .game-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .primary-btn, .secondary-btn {
+    appearance: none;
+    border: 0;
+    border-radius: 12px;
+    min-height: 44px;
+    padding: 0 18px;
+    font: 800 0.95rem/1.1 system-ui, sans-serif;
+    cursor: pointer;
+    transition: transform .12s ease;
+  }
+  .primary-btn:hover, .secondary-btn:hover { transform: translateY(-1px); }
+  .primary-btn {
+    background: linear-gradient(180deg, #8fe078, #5fbe5e);
+    color: #0a140d;
+  }
+  .secondary-btn {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    color: var(--text);
+  }
+  .side-panel {
+    display: grid;
+    gap: 16px;
+  }
+  .side-box {
+    background: linear-gradient(180deg, rgba(17,24,28,.95), rgba(9,12,15,.96));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 22px;
+    padding: 18px 18px 16px;
+  }
+  .side-box h3 {
+    margin: 0 0 12px;
+    font-size: 0.82rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .mini-list {
+    display: grid;
+    gap: 10px;
+  }
+  .mini-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .mini-item strong { color: var(--text); }
+  @media (max-width: 900px) {
+    .home-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<div class="xbox-shell">
+  <div class="dashboard">
+    <div class="topbar">
+      <div class="brand"><span class="brand-mark"></span> Xbox</div>
+      <div class="user-pill">Revens</div>
+    </div>
 
-  <script>
-    const targetUrl = 'https://gta5-87g.pages.dev/';
-    window.location.replace(targetUrl);
-  </script>
-</body>
-</html>
+    <div class="home-grid">
+      <div class="hero">
+        <div class="hero-card">
+          <div class="eyebrow">Featured</div>
+          <h1>PlayGTA5</h1>
+          <p>Jump into the GTA-style launcher experience and choose how you want to start your session.</p>
+          <div class="game-actions">
+            <button class="primary-btn" id="open-launcher-btn" type="button">Open Game</button>
+            <button class="secondary-btn" id="open-support-btn" type="button">Support</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-panel">
+        <div class="game-panel">
+          <div class="game-tile">
+            <div class="tile-header">
+              <div class="tile-title">GTA V</div>
+              <span class="pill">Installed</span>
+            </div>
+            <div class="game-banner"></div>
+            <div class="game-actions">
+              <button class="primary-btn" id="launch-gta-btn" type="button">Launch</button>
+              <button class="secondary-btn" id="details-btn" type="button">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-box">
+          <h3>Library</h3>
+          <div class="mini-list">
+            <div class="mini-item"><span>Recent</span><strong>GTA V</strong></div>
+            <div class="mini-item"><span>Mode</span><strong>Single Player</strong></div>
+            <div class="mini-item"><span>Status</span><strong>Ready</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const openLauncherBtn = document.getElementById('open-launcher-btn');
+  const launchGtaBtn = document.getElementById('launch-gta-btn');
+  const openSupportBtn = document.getElementById('open-support-btn');
+  const detailsBtn = document.getElementById('details-btn');
+
+  function launchGtaPage() {
+    window.location.href = 'https://gta5-87g.pages.dev/';
+  }
+
+  function openSupport() {
+    window.location.href = '/__support/';
+  }
+
+  openLauncherBtn.addEventListener('click', launchGtaPage);
+  launchGtaBtn.addEventListener('click', launchGtaPage);
+  openSupportBtn.addEventListener('click', openSupport);
+  detailsBtn.addEventListener('click', () => {
+    window.location.href = 'https://github.com/alihammoud21/playgta5';
+  });
+</script>
