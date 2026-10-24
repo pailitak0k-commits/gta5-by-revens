@@ -2,183 +2,282 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PlayGTA5 · PS5 Home</title>
+<title>PS5 Game Hub</title>
 <style>
   :root {
-    --bg: #050b12;
-    --bg-2: #0d1720;
-    --panel: rgba(19, 27, 34, 0.9);
-    --panel-2: rgba(11, 16, 20, 0.96);
-    --line: rgba(164, 198, 219, 0.18);
-    --ps5-blue: #4cd7ff;
-    --ps5-blue-strong: #2a8dff;
-    --ps5-purple: #7d7cff;
-    --ps5-glow: rgba(76, 215, 255, 0.42);
-    --gold: #f5c76d;
+    --bg: #060b12;
+    --bg-2: #0a1018;
+    --panel: rgba(17, 21, 26, 0.9);
+    --panel-alt: rgba(11, 15, 20, 0.96);
+    --line: rgba(163, 184, 204, 0.16);
+    --blue: #36b8ff;
+    --blue-2: #2d7dff;
+    --purple: #7d7cff;
+    --green: #63e58f;
+    --gold: #f3c77e;
     --text: #edf5fb;
-    --muted: #aebecd;
-    --shadow: rgba(0,0,0,.56);
+    --muted: #a7b6c5;
+    --shadow: rgba(0,0,0,.58);
   }
+
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; }
-  body {
+  html, body {
+    margin: 0;
+    min-height: 100%;
     background:
-      radial-gradient(circle at top, rgba(51, 119, 255, 0.22), transparent 28%),
-      radial-gradient(circle at bottom right, rgba(122, 106, 255, 0.2), transparent 30%),
-      linear-gradient(180deg, #060b11 0%, #090e14 100%);
+      radial-gradient(circle at top left, rgba(43,124,255,0.24), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(122, 108, 255, 0.18), transparent 32%),
+      linear-gradient(180deg, #04090d 0%, #0a1017 100%);
     color: var(--text);
-    font: 17px/1.6 system-ui, sans-serif;
+    font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-  .ps5-shell {
+
+  button, input {
+    font: inherit;
+  }
+
+  body {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 28px;
+    padding: 26px;
   }
-  .dashboard {
-    width: min(1180px, 100%);
-    background: linear-gradient(180deg, rgba(14, 20, 28, 0.92), rgba(8, 12, 16, 0.96));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 28px;
-    box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 0 50px rgba(12, 32, 58, 0.2);
+
+  .ps5-shell {
+    width: min(1280px, 100%);
+    background: linear-gradient(180deg, rgba(8, 13, 19, 0.95), rgba(7, 11, 15, 0.98));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 32px;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,.44),
+      inset 0 1px 0 rgba(255,255,255,.08),
+      inset 0 0 40px rgba(47, 93, 162, 0.08);
     overflow: hidden;
   }
+
   .topbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     padding: 18px 24px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.02);
   }
-  .brand {
+
+  .brand-wrap {
     display: flex;
     align-items: center;
     gap: 14px;
-    font-weight: 900;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #edf4fb;
-    font-size: 0.78rem;
   }
-  .brand-mark {
+
+  .playstation-mark {
+    position: relative;
     width: 18px;
     height: 18px;
     border-radius: 6px;
-    position: relative;
-    background: linear-gradient(135deg, var(--ps5-blue), var(--ps5-blue-strong));
-    box-shadow: 0 0 18px var(--ps5-glow);
+    background: linear-gradient(135deg, var(--blue), var(--blue-2));
+    box-shadow: 0 0 18px rgba(54,184,255,.4);
   }
-  .brand-mark::before,
-  .brand-mark::after {
+
+  .playstation-mark::before,
+  .playstation-mark::after {
     content: "";
     position: absolute;
     inset: 0;
     margin: auto;
-    border-radius: 2px;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,.9);
+    border-radius: 1.5px;
   }
-  .brand-mark::before {
-    width: 2px;
-    height: 100%;
+
+  .playstation-mark::before { width: 2px; height: 100%; }
+  .playstation-mark::after { width: 100%; height: 2px; }
+
+  .brand-name {
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.74rem;
+    font-weight: 900;
+    color: var(--text);
   }
-  .brand-mark::after {
-    width: 100%;
-    height: 2px;
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
+
+  .nav-chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.06);
+  }
+
+  .nav-chip {
+    padding: 7px 10px;
+    border-radius: 999px;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .nav-chip.active {
+    background: rgba(54,184,255,.12);
+    color: var(--text);
+  }
+
   .user-pill {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 16px;
+    padding: 8px 14px 8px 12px;
     border-radius: 999px;
-    background: linear-gradient(180deg, rgba(82, 95, 108, 0.2), rgba(20, 28, 35, 0.85));
-    border: 1px solid rgba(255,255,255,0.12);
+    background: linear-gradient(180deg, rgba(34, 42, 50, 0.8), rgba(18, 24, 31, 0.94));
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
     font-weight: 800;
     color: var(--text);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
   }
+
   .user-pill::before {
     content: "";
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: linear-gradient(180deg, #79ff9e, #48cc7c);
-    box-shadow: 0 0 12px rgba(121,255,158,0.7);
+    background: linear-gradient(180deg, var(--green), #49cc7d);
+    box-shadow: 0 0 12px rgba(99,229,143,.8);
   }
-  .home-grid {
-    padding: 30px 24px 34px;
+
+  .main {
+    padding: 26px 24px 28px;
     display: grid;
-    grid-template-columns: 1.4fr .95fr;
     gap: 24px;
   }
-  .hero {
+
+  .featured-row {
+    display: grid;
+    grid-template-columns: 1.7fr .8fr;
+    gap: 20px;
+    min-height: 430px;
+  }
+
+  .featured-panel {
     position: relative;
-    min-height: 420px;
-    background:
-      linear-gradient(180deg, rgba(10,14,20,.2), rgba(9,12,16,.78)),
-      linear-gradient(135deg, rgba(92, 120, 255, 0.18), rgba(8, 16, 24, 0.78)),
-      url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-    border-radius: 26px;
+    min-height: 430px;
+    border-radius: 28px;
+    overflow: hidden;
     border: 1px solid rgba(255,255,255,.08);
-    box-shadow: inset 0 0 30px rgba(0,0,0,.2);
+    background:
+      linear-gradient(180deg, rgba(7,10,13,0.14), rgba(7,10,13,0.74)),
+      linear-gradient(135deg, rgba(138,143,255,0.18), rgba(16,27,34,0.85)),
+      url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+    box-shadow: inset 0 0 40px rgba(0,0,0,.2);
+    padding: 24px;
     display: flex;
     align-items: flex-end;
-    padding: 22px;
   }
-  .hero-card {
-    width: min(430px, 100%);
+
+  .featured-card {
+    width: min(500px, 100%);
     padding: 22px 20px 18px;
-    border-radius: 20px;
-    background: rgba(10,14,18,.64);
-    border: 1px solid rgba(255,255,255,.09);
-    backdrop-filter: blur(8px);
+    border-radius: 22px;
+    background: rgba(7, 11, 15, 0.64);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(10px);
   }
+
   .eyebrow {
-    font-size: 0.74rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
     color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     font-weight: 900;
   }
-  .hero-card h1 {
-    margin: 10px 0 12px;
-    font-size: clamp(2.2rem, 4vw, 4rem);
-    line-height: 0.96;
-    letter-spacing: -0.07em;
+
+  .featured-card h1 {
+    margin: 14px 0 10px;
+    font-size: clamp(2.5rem, 4vw, 5rem);
+    letter-spacing: -0.08em;
+    line-height: 0.9;
   }
-  .hero-card p {
-    margin: 0 0 18px;
+
+  .featured-card p {
+    font-size: 1rem;
     color: #dfeaf5;
     max-width: 30ch;
+    margin: 0 0 18px;
   }
-  .game-panel {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
-  .game-tile {
-    background: linear-gradient(180deg, rgba(22,31,35,.96), rgba(14,19,22,.96));
+
+  .primary-btn,
+  .secondary-btn,
+  .mini-btn {
+    appearance: none;
+    border: 0;
+    border-radius: 12px;
+    min-height: 46px;
+    padding: 0 18px;
+    cursor: pointer;
+    font-weight: 800;
+    transition: transform .12s ease, filter .12s ease;
+  }
+
+  .primary-btn:hover,
+  .secondary-btn:hover,
+  .mini-btn:hover { transform: translateY(-1px); }
+
+  .primary-btn {
+    background: linear-gradient(180deg, #71d9ff, #2b8dff 58%, #1d5be1);
+    color: #041118;
+    box-shadow: 0 14px 28px rgba(43,141,255,.34);
+  }
+
+  .secondary-btn {
+    background: rgba(255,255,255,.05);
+    color: var(--text);
     border: 1px solid rgba(255,255,255,.08);
-    border-radius: 22px;
-    padding: 16px;
-    display: grid;
-    gap: 14px;
   }
-  .tile-header {
+
+  .side-stack {
+    display: grid;
+    gap: 18px;
+  }
+
+  .game-box {
+    background: linear-gradient(180deg, rgba(18,24,31,.96), rgba(11,14,18,.98));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 24px;
+    padding: 18px 16px 16px;
+  }
+
+  .tile-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    margin-bottom: 12px;
   }
+
   .tile-title {
-    font-size: 1.2rem;
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
-  .pill {
+
+  .status-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -188,99 +287,92 @@
     border: 1px solid rgba(255,255,255,.1);
     background: rgba(255,255,255,.04);
     color: var(--muted);
-    font-size: .72rem;
-    font-weight: 800;
-    letter-spacing: .08em;
+    font-size: 0.7rem;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 800;
   }
+
   .game-banner {
     position: relative;
-    min-height: 170px;
+    min-height: 180px;
     border-radius: 18px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,.08);
     background:
-      linear-gradient(180deg, rgba(8,13,18,.12), rgba(8,13,18,.72)),
-      url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      linear-gradient(180deg, rgba(8,12,16,.12), rgba(8,12,16,.7)),
+      url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+    margin-bottom: 14px;
   }
+
   .game-banner::after {
     content: "GTA V";
     position: absolute;
     left: 18px;
     bottom: 16px;
-    font-size: 2.2rem;
-    line-height: 1;
-    letter-spacing: -0.08em;
+    font-size: 2.1rem;
     font-weight: 900;
+    letter-spacing: -0.08em;
     color: rgba(255,255,255,.92);
-    text-shadow: 0 8px 24px rgba(0,0,0,.45);
+    text-shadow: 0 8px 22px rgba(0,0,0,.45);
   }
+
   .game-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
   }
-  .primary-btn, .secondary-btn, .menu-btn {
-    appearance: none;
-    border: 0;
-    border-radius: 12px;
-    min-height: 44px;
-    padding: 0 18px;
-    font: 800 0.95rem/1.1 system-ui, sans-serif;
-    cursor: pointer;
-    transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
-  }
-  .primary-btn:hover, .secondary-btn:hover, .menu-btn:hover { transform: translateY(-1px); }
-  .primary-btn {
-    background: linear-gradient(180deg, #73d5ff, #2a8dff 52%, #1f5be5);
-    color: #05121b;
-    box-shadow: 0 10px 26px rgba(41, 141, 255, 0.35);
-  }
-  .secondary-btn {
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.1);
-    color: var(--text);
-  }
-  .menu-btn {
-    background: rgba(255,255,255,.03);
+
+  .mini-btn {
+    background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.08);
     color: var(--text);
-    min-width: 120px;
   }
-  .side-panel {
+
+  .library-grid {
     display: grid;
-    gap: 16px;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 18px;
   }
-  .side-box {
-    background: linear-gradient(180deg, rgba(17,24,28,.95), rgba(9,12,15,.96));
+
+  .library-card {
+    background: linear-gradient(180deg, rgba(17,22,27,.96), rgba(11,14,17,.98));
     border: 1px solid rgba(255,255,255,.08);
-    border-radius: 22px;
-    padding: 18px 18px 16px;
+    border-radius: 20px;
+    overflow: hidden;
+    min-height: 220px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
   }
-  .side-box h3 {
-    margin: 0 0 12px;
-    font-size: 0.82rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
+
+  .library-art {
+    height: 132px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid rgba(255,255,255,.08);
   }
-  .mini-list {
-    display: grid;
-    gap: 10px;
+
+  .library-info {
+    padding: 14px 14px 12px;
   }
-  .mini-item {
+
+  .library-name {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 12px;
-    padding: 10px 12px;
-    color: var(--muted);
-    font-size: 0.95rem;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-weight: 800;
   }
-  .mini-item strong { color: var(--text); }
+
+  .library-meta {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .game-1 { background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=700&q=80'); }
+  .game-2 { background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=700&q=80'); }
+  .game-3 { background-image: url('https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=700&q=80'); }
+  .game-4 { background-image: url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=700&q=80'); }
 
   .settings-overlay {
     position: fixed;
@@ -288,76 +380,85 @@
     display: none;
     align-items: center;
     justify-content: center;
-    background: rgba(4,6,8,.58);
-    backdrop-filter: blur(8px);
+    background: rgba(2, 6, 10, 0.64);
+    backdrop-filter: blur(10px);
     z-index: 50;
     padding: 20px;
   }
+
   .settings-overlay.visible { display: flex; }
+
   .settings-panel {
     width: min(760px, 100%);
-    background: linear-gradient(180deg, rgba(15,21,25,.98), rgba(10,14,16,.99));
+    background: linear-gradient(180deg, rgba(17,23,29,.98), rgba(10,14,17,.99));
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 24px;
-    box-shadow: 0 26px 80px var(--shadow);
     overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.48);
   }
+
   .settings-top {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 18px;
+    justify-content: space-between;
     padding: 18px 20px;
     border-bottom: 1px solid rgba(255,255,255,.08);
   }
+
   .settings-title {
-    font-size: 0.82rem;
+    font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--gold);
-    font-weight: 800;
+    font-weight: 900;
   }
+
   .settings-body {
     display: grid;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 210px 1fr;
     min-height: 420px;
   }
+
   .settings-nav {
-    padding: 16px;
     background: rgba(255,255,255,.02);
     border-right: 1px solid rgba(255,255,255,.08);
+    padding: 16px;
   }
+
   .settings-nav button {
-    display: flex;
     width: 100%;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    border: 1px solid transparent;
+    padding: 12px 14px;
     border-radius: 12px;
+    border: 1px solid transparent;
     background: transparent;
     color: var(--text);
-    padding: 12px 14px;
-    font: 700 0.9rem/1 system-ui, sans-serif;
-    margin-bottom: 8px;
-    cursor: pointer;
     text-align: left;
+    cursor: pointer;
+    margin-bottom: 8px;
+    font-weight: 700;
   }
+
   .settings-nav button.active {
     background: rgba(255,255,255,.04);
     border-color: rgba(255,255,255,.08);
   }
+
   .settings-content {
     padding: 22px 20px 18px;
   }
-  .settings-section {
-    display: none;
-  }
+
+  .settings-section { display: none; }
   .settings-section.active { display: block; }
+
   .panel-grid {
     display: grid;
     gap: 14px;
   }
+
   .panel-item {
     display: flex;
     align-items: center;
@@ -368,19 +469,22 @@
     border-radius: 14px;
     padding: 14px 16px;
   }
+
   .panel-item small {
     display: block;
-    color: var(--muted);
     margin-top: 4px;
+    color: var(--muted);
   }
+
   .toggle {
+    position: relative;
     width: 54px;
     height: 30px;
     border-radius: 999px;
     background: rgba(255,255,255,.08);
     border: 1px solid rgba(255,255,255,.12);
-    position: relative;
   }
+
   .toggle::after {
     content: "";
     position: absolute;
@@ -392,18 +496,20 @@
     background: var(--text);
     transition: transform .15s ease;
   }
+
   .toggle.on {
     background: linear-gradient(180deg, rgba(125,225,104,.35), rgba(87,169,255,.3));
     border-color: rgba(125,225,104,.6);
   }
+
   .toggle.on::after { transform: translateX(23px); }
+
   .settings-actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    margin-top: 18px;
+    margin-top: 20px;
   }
-  .menu-btn.primary { background: linear-gradient(180deg, #8fe078, #5fbe5e); color: #0a140d; }
 
   .welcome-overlay {
     position: fixed;
@@ -411,95 +517,111 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(4, 8, 12, 0.7);
+    background: rgba(3, 7, 12, 0.7);
     backdrop-filter: blur(12px);
     z-index: 100;
-    padding: 20px;
+    padding: 18px;
   }
+
   .welcome-overlay.hidden { display: none; }
+
   .welcome-card {
     width: min(480px, 100%);
-    padding: 28px 24px 22px;
-    background: linear-gradient(180deg, rgba(12,18,23,0.96), rgba(10,12,16,0.98));
-    border: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(180deg, rgba(12,18,24,.96), rgba(8,11,15,.98));
+    border: 1px solid rgba(255,255,255,.08);
     border-radius: 26px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(76, 215, 255, 0.14);
+    padding: 26px 24px 22px;
+    box-shadow: 0 28px 70px rgba(0,0,0,.48);
   }
+
   .welcome-badge {
     display: inline-block;
     margin-bottom: 14px;
-    padding: 7px 12px;
+    padding: 7px 10px;
     border-radius: 999px;
-    background: rgba(76, 215, 255, 0.12);
-    border: 1px solid rgba(76, 215, 255, 0.25);
-    color: var(--ps5-blue);
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    background: rgba(54,184,255,.12);
+    border: 1px solid rgba(54,184,255,.28);
+    color: var(--blue);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 900;
   }
+
   .welcome-card h2 {
     margin: 0 0 8px;
     font-size: clamp(2rem, 4vw, 2.8rem);
-    letter-spacing: -0.07em;
+    letter-spacing: -0.08em;
   }
+
   .welcome-card p {
     margin: 0 0 18px;
     color: var(--muted);
   }
+
   .welcome-field {
     display: grid;
     gap: 10px;
     margin-bottom: 18px;
   }
+
   .welcome-field label {
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
     color: var(--muted);
-    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 900;
   }
+
   .welcome-field input {
     width: 100%;
     min-height: 52px;
     padding: 0 16px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
     color: var(--text);
-    font: 700 1.05rem/1.2 system-ui, sans-serif;
     outline: none;
+    font-weight: 700;
   }
+
   .welcome-field input:focus {
-    border-color: rgba(76, 215, 255, 0.7);
-    box-shadow: 0 0 0 3px rgba(76,215,255,0.12);
+    border-color: rgba(54,184,255,.7);
+    box-shadow: 0 0 0 3px rgba(54,184,255,.12);
   }
+
   .welcome-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-  }
-  .welcome-actions .primary-btn {
-    min-width: 150px;
   }
 
-  @media (max-width: 900px) {
-    .home-grid { grid-template-columns: 1fr; }
+  @media (max-width: 980px) {
+    .featured-row { grid-template-columns: 1fr; }
+    .library-grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
     .settings-body { grid-template-columns: 1fr; }
-    .settings-nav {
-      border-right: 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
+    .settings-nav { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+  }
+
+  @media (max-width: 620px) {
+    body { padding: 16px; }
+    .topbar { padding: 14px 16px; }
+    .topbar-right { gap: 8px; }
+    .nav-chips { display: none; }
+    .library-grid { grid-template-columns: 1fr; }
+    .main { padding: 18px 16px 20px; }
+    .featured-panel { min-height: 360px; }
+    .featured-card h1 { font-size: 2.5rem; }
   }
 </style>
+
 <div class="welcome-overlay" id="username-overlay">
-  <div class="welcome-card" aria-live="polite">
+  <div class="welcome-card">
     <div class="welcome-badge">PS5</div>
     <h2>Welcome</h2>
-    <p>Choose a username to personalize your session.</p>
+    <p>Choose a username to personalize your console.</p>
     <div class="welcome-field">
       <label for="username-input">Username</label>
-      <input id="username-input" type="text" maxlength="18" placeholder="Enter your username" autocomplete="off" />
+      <input id="username-input" type="text" maxlength="18" placeholder="Enter your username" autocomplete="off">
     </div>
     <div class="welcome-actions">
       <button class="primary-btn" id="save-username-btn" type="button">Continue</button>
@@ -508,61 +630,95 @@
 </div>
 
 <div class="ps5-shell">
-  <div class="dashboard">
-    <div class="topbar">
-      <div class="brand"><span class="brand-mark"></span> PS5</div>
+  <div class="topbar">
+    <div class="brand-wrap">
+      <span class="playstation-mark" aria-hidden="true"></span>
+      <div class="brand-name">PS5</div>
+    </div>
+
+    <div class="topbar-right">
+      <div class="nav-chips" aria-label="Primary navigation">
+        <button class="nav-chip active" type="button">Home</button>
+        <button class="nav-chip" type="button">Game Library</button>
+        <button class="nav-chip" type="button">Media</button>
+      </div>
       <div class="user-pill" id="user-pill">Player</div>
     </div>
+  </div>
 
-    <div class="home-grid">
-      <div class="hero">
-        <div class="hero-card">
+  <main class="main">
+    <section class="featured-row">
+      <div class="featured-panel">
+        <div class="featured-card">
           <div class="eyebrow">Featured</div>
           <h1>PlayGTA5</h1>
-          <p>Jump into the GTA-style launcher experience and choose how you want to start your session.</p>
-          <div class="game-actions">
+          <p>Jump into a cinematic open-world session and start your next adventure from the PS5 dashboard.</p>
+          <div class="cta-row">
             <button class="primary-btn" id="open-launcher-btn" type="button">Open Game</button>
-            <button class="secondary-btn" id="split-launch-btn" type="button">Play Split Screen</button>
+            <button class="secondary-btn" id="split-launch-btn" type="button">Split Screen</button>
             <button class="secondary-btn" id="open-settings-btn" type="button">Settings</button>
-            <button class="secondary-btn" id="open-support-btn" type="button">Support</button>
           </div>
         </div>
       </div>
 
-      <div class="side-panel">
-        <div class="game-panel">
-          <div class="game-tile">
-            <div class="tile-header">
-              <div class="tile-title">GTA V</div>
-              <span class="pill">Installed</span>
-            </div>
-            <div class="game-banner"></div>
-            <div class="game-actions">
-              <button class="primary-btn" id="launch-gta-btn" type="button">Launch</button>
-              <button class="secondary-btn" id="split-screen-btn" type="button">Split Screen</button>
-            </div>
+      <aside class="side-stack">
+        <div class="game-box">
+          <div class="tile-head">
+            <div class="tile-title">GTA V</div>
+            <span class="status-badge">Installed</span>
+          </div>
+          <div class="game-banner"></div>
+          <div class="game-actions">
+            <button class="primary-btn" id="launch-gta-btn" type="button">Launch</button>
+            <button class="mini-btn" id="split-screen-btn" type="button">Split</button>
           </div>
         </div>
+      </aside>
+    </section>
 
-        <div class="side-box">
-          <h3>Library</h3>
-          <div class="mini-list">
-            <div class="mini-item"><span>Recent</span><strong>GTA V</strong></div>
-            <div class="mini-item"><span>Mode</span><strong>Single Player</strong></div>
-            <div class="mini-item"><span>Status</span><strong>Ready</strong></div>
-          </div>
+    <section class="library-grid" aria-label="Game library">
+      <article class="library-card">
+        <div class="library-art game-1"></div>
+        <div class="library-info">
+          <div class="library-name"><span>Cyberpunk</span><span>▶</span></div>
+          <div class="library-meta">Action • New</div>
         </div>
-      </div>
-    </div>
-  </div>
+      </article>
+
+      <article class="library-card">
+        <div class="library-art game-2"></div>
+        <div class="library-info">
+          <div class="library-name"><span>Racing</span><span>▶</span></div>
+          <div class="library-meta">Arcade • Ready</div>
+        </div>
+      </article>
+
+      <article class="library-card">
+        <div class="library-art game-3"></div>
+        <div class="library-info">
+          <div class="library-name"><span>Adventure</span><span>▶</span></div>
+          <div class="library-meta">Story • Saved</div>
+        </div>
+      </article>
+
+      <article class="library-card">
+        <div class="library-art game-4"></div>
+        <div class="library-info">
+          <div class="library-name"><span>Sports</span><span>▶</span></div>
+          <div class="library-meta">Multiplayer • Online</div>
+        </div>
+      </article>
+    </section>
+  </main>
 </div>
 
 <div id="settings-overlay" class="settings-overlay" aria-hidden="true">
   <div class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
     <div class="settings-top">
       <div class="settings-title" id="settings-title">Game Settings</div>
-      <button class="menu-btn" id="close-settings-btn" type="button">Close</button>
+      <button class="secondary-btn" id="close-settings-btn" type="button">Close</button>
     </div>
+
     <div class="settings-body">
       <div class="settings-nav">
         <button class="active" data-tab="general" type="button">General <span>›</span></button>
@@ -570,6 +726,7 @@
         <button data-tab="audio" type="button">Audio <span>›</span></button>
         <button data-tab="network" type="button">Network <span>›</span></button>
       </div>
+
       <div class="settings-content">
         <div class="settings-section active" data-section="general">
           <div class="panel-grid">
@@ -670,14 +827,14 @@
                 <strong>Leave session</strong>
                 <small>Back to the launcher</small>
               </div>
-              <button class="menu-btn primary" type="button" id="exit-to-home-btn">Exit</button>
+              <button class="primary-btn" type="button" id="exit-to-home-btn">Exit</button>
             </div>
           </div>
         </div>
 
         <div class="settings-actions">
-          <button class="menu-btn" id="resume-btn" type="button">Resume</button>
-          <button class="menu-btn primary" id="save-settings-btn" type="button">Save</button>
+          <button class="secondary-btn" id="resume-btn" type="button">Resume</button>
+          <button class="primary-btn" id="save-settings-btn" type="button">Save</button>
         </div>
       </div>
     </div>
@@ -691,8 +848,7 @@
   const userPill = document.getElementById('user-pill');
 
   function setUsername(value) {
-    const username = (value || '').trim();
-    const finalName = username ? username : 'Player';
+    const finalName = (value || '').trim() || 'Player';
     userPill.textContent = finalName;
     localStorage.setItem('ps5-username', finalName);
   }
@@ -717,7 +873,7 @@
   }
 
   saveUsernameBtn.addEventListener('click', handleUsernameSubmit);
-  usernameInput.addEventListener('keydown', (event) => {
+  usernameInput.addEventListener('keydown', function (event) {
     if (event.key === 'Enter') handleUsernameSubmit();
   });
 
@@ -725,7 +881,6 @@
   const splitLaunchBtn = document.getElementById('split-launch-btn');
   const splitScreenBtn = document.getElementById('split-screen-btn');
   const launchGtaBtn = document.getElementById('launch-gta-btn');
-  const openSupportBtn = document.getElementById('open-support-btn');
   const openSettingsBtn = document.getElementById('open-settings-btn');
   const closeSettingsBtn = document.getElementById('close-settings-btn');
   const resumeBtn = document.getElementById('resume-btn');
@@ -766,17 +921,14 @@
   launchGtaBtn.addEventListener('click', () => launchGtaPage('single'));
   splitLaunchBtn.addEventListener('click', () => launchGtaPage('split'));
   splitScreenBtn.addEventListener('click', () => launchGtaPage('split'));
-  openSupportBtn.addEventListener('click', openSupport);
   openSettingsBtn.addEventListener('click', openSettings);
   closeSettingsBtn.addEventListener('click', closeSettings);
   resumeBtn.addEventListener('click', closeSettings);
   saveSettingsBtn.addEventListener('click', closeSettings);
   exitToHomeBtn.addEventListener('click', () => { window.location.href = '/'; });
 
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      toggleSettings();
-    }
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') toggleSettings();
   });
 
   document.querySelectorAll('[data-tab]').forEach((button) => {
