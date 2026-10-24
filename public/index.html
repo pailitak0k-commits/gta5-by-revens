@@ -18,6 +18,8 @@
     --blue: #64c7ff;
     --gold: #f3d488;
     --shadow: rgba(0,0,0,0.65);
+    --danger: #ff8b7d;
+    --panel-soft: rgba(255,255,255,0.03);
   }
 
   * { box-sizing: border-box; }
@@ -78,6 +80,12 @@
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
 
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   .brand {
     display: flex;
     align-items: center;
@@ -110,6 +118,33 @@
 
   .brand-mark::before { width: 2px; height: 100%; }
   .brand-mark::after { width: 100%; height: 2px; }
+
+  .nav-pills {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: 6px;
+  }
+
+  .nav-pill {
+    appearance: none;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.78);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .nav-pill.active {
+    background: rgba(100,199,255,0.12);
+    color: var(--text);
+    border-color: rgba(100,199,255,0.2);
+  }
 
   .status {
     display: flex;
@@ -419,6 +454,397 @@
     box-shadow: 0 12px 24px rgba(45,163,255,0.26);
   }
 
+  .media-view {
+    display: none;
+    position: relative;
+    z-index: 2;
+    width: min(980px, 100%);
+    min-height: 650px;
+    background: linear-gradient(180deg, rgba(11,14,18,.96), rgba(5,8,11,.98));
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  }
+
+  .media-view.visible { display: block; }
+
+  .media-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: rgba(9, 12, 18, 0.84);
+  }
+
+  .media-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 900;
+  }
+
+  .owner-code-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 999px;
+    padding: 8px 12px;
+  }
+
+  .owner-code-box label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+  }
+
+  .owner-code-box input {
+    width: 140px;
+    background: transparent;
+    border: 0;
+    outline: none;
+    color: var(--text);
+    font-weight: 800;
+  }
+
+  .media-body {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 560px;
+  }
+
+  .channel-sidebar {
+    background: rgba(255,255,255,.02);
+    border-right: 1px solid rgba(255,255,255,.08);
+    padding: 18px 14px;
+  }
+
+  .channel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  .channel-btn.active {
+    background: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.08);
+  }
+
+  .channel-btn span:last-child {
+    color: rgba(255,255,255,.6);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .channel-panel {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 560px;
+    background: rgba(4, 7, 10, 0.52);
+  }
+
+  .channel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+
+  .channel-name {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 900;
+  }
+
+  .channel-lock {
+    color: rgba(255,255,255,.65);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .messages {
+    padding: 16px 18px 8px;
+    overflow: auto;
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+
+  .message {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 14px;
+    padding: 12px 12px 10px;
+  }
+
+  .message-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .meta-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #7bb5ff, #73e8d0);
+    color: #04121a;
+    font-weight: 900;
+    font-size: 0.76rem;
+  }
+
+  .author {
+    font-weight: 800;
+    font-size: 0.82rem;
+  }
+
+  .owner-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 2px 7px;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #03171b;
+    background: linear-gradient(180deg, #ffd76a, #f4bb42);
+  }
+
+  .message-time {
+    color: rgba(255,255,255,.56);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .message-body {
+    color: rgba(255,255,255,.9);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .message-image {
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+
+  .comment-toggle {
+    margin-top: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.06);
+    color: rgba(255,255,255,.8);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .comments-box {
+    margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding-top: 10px;
+    display: none;
+  }
+
+  .comments-box.visible { display: block; }
+
+  .comment-list {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .comment {
+    border-radius: 10px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid rgba(255,255,255,.05);
+    padding: 8px 9px;
+    color: rgba(255,255,255,.8);
+    font-size: 0.8rem;
+  }
+
+  .comment strong {
+    color: var(--text);
+  }
+
+  .comment-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .comment-form input {
+    flex: 1;
+    min-height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    padding: 0 10px;
+    outline: none;
+  }
+
+  .comment-form button {
+    min-height: 36px;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,.06);
+    color: var(--text);
+    padding: 0 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .composer {
+    padding: 14px 18px 18px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    background: rgba(9, 12, 18, 0.86);
+  }
+
+  .composer-inner {
+    display: grid;
+    gap: 10px;
+  }
+
+  .composer-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .composer textarea {
+    width: 100%;
+    min-height: 78px;
+    resize: vertical;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+    color: var(--text);
+    font: 600 0.9rem/1.5 system-ui, sans-serif;
+    padding: 12px 14px;
+    outline: none;
+  }
+
+  .composer textarea:focus {
+    border-color: rgba(100,199,255,.7);
+    box-shadow: 0 0 0 3px rgba(100,199,255,.08);
+  }
+
+  .composer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .upload-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,.74);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .upload-wrap input {
+    display: none;
+  }
+
+  .upload-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .send-btn {
+    min-height: 40px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #7fe9ff, #2da3ff 64%, #2458d1);
+    color: #07131c;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(45,163,255,0.3);
+  }
+
+  .send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .notice {
+    color: var(--danger);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 800;
+    min-height: 1em;
+  }
+
+  .empty-state {
+    color: rgba(255,255,255,.65);
+    border: 1px dashed rgba(255,255,255,.12);
+    padding: 26px 18px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   @media (max-width: 760px) {
     .game-shell { height: 560px; }
     .title { bottom: 120px; }
@@ -426,6 +852,10 @@
     .right-stack { width: 140px; }
     .bottom-bar { flex-direction: column; align-items: flex-start; }
     .right-stack-mini { width: 100%; justify-content: flex-start; }
+    .media-body { grid-template-columns: 1fr; }
+    .channel-sidebar { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .owner-code-box { width: 100%; }
+    .owner-code-box input { width: 100%; }
   }
 </style>
 
@@ -444,14 +874,20 @@
   </div>
 </div>
 
-<div class="game-shell">
+<div id="home-view" class="game-shell">
   <div class="bg-image"></div>
   <div class="vignette"></div>
 
   <div class="topbar">
-    <div class="brand">
-      <span class="brand-mark"></span>
-      <span>PS5</span>
+    <div class="brand-wrap">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span>PS5</span>
+      </div>
+      <div class="nav-pills">
+        <button class="nav-pill active" type="button" id="home-btn">Home</button>
+        <button class="nav-pill" type="button" id="media-btn">Media</button>
+      </div>
     </div>
     <div class="status">
       <span class="status-dot"></span>
@@ -496,38 +932,391 @@
   </div>
 </div>
 
+<div id="media-view" class="media-view" aria-live="polite">
+  <div class="media-header">
+    <div class="media-title">Media</div>
+    <div class="owner-code-box">
+      <label for="owner-code-input">Owner code</label>
+      <input id="owner-code-input" type="password" maxlength="20" placeholder="revensgg" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="media-body">
+    <aside class="channel-sidebar">
+      <button class="channel-btn active" data-channel="update" type="button"><span>Update</span><span>Owner</span></button>
+      <button class="channel-btn" data-channel="bug" type="button"><span>Bug</span><span>Public</span></button>
+    </aside>
+
+    <div class="channel-panel">
+      <div class="channel-top">
+        <div class="channel-name" id="active-channel-label">Update channel</div>
+        <div class="channel-lock" id="channel-lock">Owners only</div>
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+      <form class="composer" id="composer-form">
+        <div class="composer-inner">
+          <div class="composer-row">
+            <textarea id="message-input" placeholder="Write a message..." maxlength="500"></textarea>
+          </div>
+          <div class="composer-actions">
+            <div class="upload-wrap">
+              <label class="upload-btn" for="image-upload">Add image</label>
+              <input id="image-upload" type="file" accept="image/*">
+              <span id="image-name">No image</span>
+            </div>
+            <button class="send-btn" id="send-btn" type="submit">Send</button>
+          </div>
+          <div class="notice" id="notice"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
+  const STORAGE_KEY = 'ps5_media_messages_v1';
+  const OWNER_CODE = 'revensgg';
+
+  const homeView = document.getElementById('home-view');
+  const mediaView = document.getElementById('media-view');
+  const mediaBtn = document.getElementById('media-btn');
+  const homeBtn = document.getElementById('home-btn');
+
   const overlay = document.getElementById('username-overlay');
   const usernameInput = document.getElementById('username-input');
   const saveUsernameBtn = document.getElementById('save-username-btn');
+  const ownerCodeInput = document.getElementById('owner-code-input');
+  const channelButtons = document.querySelectorAll('.channel-btn');
+  const messagesEl = document.getElementById('messages');
+  const messageInput = document.getElementById('message-input');
+  const imageUpload = document.getElementById('image-upload');
+  const imageName = document.getElementById('image-name');
+  const noticeEl = document.getElementById('notice');
+  const activeChannelLabel = document.getElementById('active-channel-label');
+  const channelLock = document.getElementById('channel-lock');
+  const composerForm = document.getElementById('composer-form');
 
-  function setUsername(value) {
-    const name = (value || '').trim() || 'Player';
-    localStorage.setItem('ps5-username', name);
+  let activeChannel = 'update';
+  let selectedImageData = '';
+
+  function getStoredUsername() {
+    return localStorage.getItem('ps5-username') || 'Player';
+  }
+
+  function getOwnerCode() {
+    return (localStorage.getItem('ps5-owner-code') || '').trim();
+  }
+
+  function setOwnerCode(value) {
+    localStorage.setItem('ps5-owner-code', value.trim());
+  }
+
+  function isOwnerCodeValid(code) {
+    return (code || '').trim().toLowerCase() === OWNER_CODE;
+  }
+
+  function createDefaultMessages() {
+    return {
+      update: [
+        {
+          id: 'seed-update-1',
+          author: 'Owner',
+          text: 'Welcome to the update channel. Owner-only updates will appear here.',
+          owner: true,
+          timestamp: Date.now() - 900000,
+          image: '',
+          comments: [
+            { id: 'seed-comment-1', author: 'Player', text: 'Nice! Keep it up.', timestamp: Date.now() - 600000 }
+          ]
+        }
+      ],
+      bug: [
+        {
+          id: 'seed-bug-1',
+          author: 'Player',
+          text: 'Some textures look blurry on low settings. Can someone check?',
+          owner: false,
+          timestamp: Date.now() - 1200000,
+          image: '',
+          comments: [
+            { id: 'seed-comment-2', author: 'Owner', text: 'Thanks, we are checking the shader fix.', timestamp: Date.now() - 900000 }
+          ]
+        }
+      ]
+    };
+  }
+
+  function loadMessages() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return createDefaultMessages();
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.update && parsed.bug) return parsed;
+    } catch (e) {}
+    return createDefaultMessages();
+  }
+
+  let messages = loadMessages();
+
+  function saveMessages() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  }
+
+  function formatTime(ts) {
+    const date = new Date(ts);
+    return new Intl.DateTimeFormat('en', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit'
+    }).format(date);
+  }
+
+  function openHome() {
+    homeView.style.display = 'block';
+    mediaView.classList.remove('visible');
+    homeBtn.classList.add('active');
+    mediaBtn.classList.remove('active');
+  }
+
+  function openMedia() {
+    homeView.style.display = 'none';
+    mediaView.classList.add('visible');
+    mediaBtn.classList.add('active');
+    homeBtn.classList.remove('active');
+  }
+
+  function renderMessages() {
+    const items = messages[activeChannel] || [];
+    messagesEl.innerHTML = '';
+
+    if (!items.length) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.textContent = activeChannel === 'update' ? 'No owner updates yet' : 'No bug reports yet';
+      messagesEl.appendChild(empty);
+      return;
+    }
+
+    items.forEach((item) => {
+      const card = document.createElement('article');
+      card.className = 'message';
+
+      const head = document.createElement('div');
+      head.className = 'message-head';
+      head.innerHTML = `
+        <div class="meta-line">
+          <span class="avatar">${(item.author || 'U').charAt(0).toUpperCase()}</span>
+          <span class="author">${escapeHtml(item.author || 'Player')}</span>
+          ${item.owner ? '<span class="owner-badge">Owner</span>' : ''}
+        </div>
+        <span class="message-time">${formatTime(item.timestamp || Date.now())}</span>
+      `;
+
+      const body = document.createElement('div');
+      body.className = 'message-body';
+      body.textContent = item.text || '';
+
+      const action = document.createElement('button');
+      action.type = 'button';
+      action.className = 'comment-toggle';
+      action.textContent = `Comments (${(item.comments || []).length})`;
+
+      const commentsBox = document.createElement('div');
+      commentsBox.className = 'comments-box';
+
+      const commentList = document.createElement('div');
+      commentList.className = 'comment-list';
+      (item.comments || []).forEach((comment) => {
+        const commentEl = document.createElement('div');
+        commentEl.className = 'comment';
+        commentEl.innerHTML = `<strong>${escapeHtml(comment.author || 'Player')}</strong> · ${escapeHtml(comment.text || '')}`;
+        commentList.appendChild(commentEl);
+      });
+
+      const form = document.createElement('form');
+      form.className = 'comment-form';
+      form.innerHTML = `
+        <input type="text" maxlength="180" aria-label="Write a comment" placeholder="Write a comment...">
+        <button type="submit">Reply</button>
+      `;
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const input = form.querySelector('input');
+        const value = (input.value || '').trim();
+        if (!value) return;
+        if (!item.comments) item.comments = [];
+        item.comments.push({
+          id: `comment-${Date.now()}`,
+          author: getStoredUsername(),
+          text: value,
+          timestamp: Date.now()
+        });
+        saveMessages();
+        renderMessages();
+      });
+
+      action.addEventListener('click', () => {
+        commentsBox.classList.toggle('visible');
+      });
+
+      commentsBox.appendChild(commentList);
+      commentsBox.appendChild(form);
+
+      if (item.image) {
+        const img = document.createElement('img');
+        img.className = 'message-image';
+        img.src = item.image;
+        img.alt = 'Uploaded message image';
+        body.appendChild(img);
+      }
+
+      card.appendChild(head);
+      card.appendChild(body);
+      card.appendChild(action);
+      card.appendChild(commentsBox);
+      messagesEl.appendChild(card);
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function updateChannelState() {
+    const isUpdate = activeChannel === 'update';
+    activeChannelLabel.textContent = isUpdate ? 'Update channel' : 'Bug channel';
+    channelLock.textContent = isUpdate ? 'Owners only' : 'Public';
+    channelButtons.forEach((button) => {
+      button.classList.toggle('active', button.dataset.channel === activeChannel);
+    });
+
+    const isOwner = isOwnerCodeValid(ownerCodeInput.value);
+    document.getElementById('send-btn').disabled = isUpdate && !isOwner;
+    noticeEl.textContent = isUpdate && !isOwner ? 'Owner code required for update channel.' : '';
+  }
+
+  function handleChannelChange(channel) {
+    activeChannel = channel;
+    updateChannelState();
+    renderMessages();
+  }
+
+  function handleMessageSubmit(event) {
+    event.preventDefault();
+
+    const text = messageInput.value.trim();
+    const ownerCode = ownerCodeInput.value.trim();
+    const isOwner = isOwnerCodeValid(ownerCode);
+    if (activeChannel === 'update' && !isOwner) {
+      noticeEl.textContent = 'Owner code required for update channel.';
+      return;
+    }
+
+    if (!text && !selectedImageData) {
+      noticeEl.textContent = 'Type a message or add an image.';
+      return;
+    }
+
+    const message = {
+      id: `msg-${Date.now()}`,
+      author: getStoredUsername(),
+      text,
+      owner: isOwner,
+      timestamp: Date.now(),
+      image: selectedImageData || '',
+      comments: []
+    };
+
+    messages[activeChannel] = [message, ...(messages[activeChannel] || [])];
+    saveMessages();
+    renderMessages();
+    messageInput.value = '';
+    imageUpload.value = '';
+    selectedImageData = '';
+    imageName.textContent = 'No image';
+    noticeEl.textContent = '';
+  }
+
+  function processImage(file) {
+    if (!file) {
+      selectedImageData = '';
+      imageName.textContent = 'No image';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function () {
+      selectedImageData = reader.result;
+      imageName.textContent = file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function initializeUi() {
+    const savedCode = getOwnerCode();
+    ownerCodeInput.value = savedCode || '';
+    ownerCodeInput.addEventListener('input', () => {
+      const code = ownerCodeInput.value.trim();
+      setOwnerCode(code);
+      updateChannelState();
+    });
+
+    channelButtons.forEach((button) => {
+      button.addEventListener('click', () => handleChannelChange(button.dataset.channel));
+    });
+
+    imageUpload.addEventListener('change', (event) => processImage(event.target.files[0]));
+    composerForm.addEventListener('submit', handleMessageSubmit);
+
+    if (!savedCode && OWNER_CODE) {
+      ownerCodeInput.placeholder = 'revensgg';
+    }
+
+    updateChannelState();
+    renderMessages();
+  }
+
+  mediaBtn.addEventListener('click', openMedia);
+  homeBtn.addEventListener('click', openHome);
+
+  const usernameStored = localStorage.getItem('ps5-username');
+  if (usernameStored) {
+    setOwnerCode(getOwnerCode());
   }
 
   function submitUsername() {
-    const value = usernameInput.value;
-    if (!value.trim()) {
+    const value = usernameInput.value.trim();
+    if (!value) {
       usernameInput.focus();
       usernameInput.placeholder = 'Please enter a username';
       return;
     }
-    setUsername(value);
+    localStorage.setItem('ps5-username', value);
     overlay.classList.add('hidden');
-  }
-
-  const storedUsername = localStorage.getItem('ps5-username');
-  if (storedUsername) {
-    setUsername(storedUsername);
-    overlay.classList.add('hidden');
-  } else {
-    usernameInput.focus();
+    initializeUi();
   }
 
   saveUsernameBtn.addEventListener('click', submitUsername);
-  usernameInput.addEventListener('keydown', function (event) {
+  usernameInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') submitUsername();
   });
+
+  const storedUsername = localStorage.getItem('ps5-username');
+  if (storedUsername) {
+    localStorage.setItem('ps5-owner-code', getOwnerCode() || '');
+    overlay.classList.add('hidden');
+    initializeUi();
+  } else {
+    usernameInput.focus();
+  }
 </script>
 </html>
